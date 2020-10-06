@@ -1,24 +1,19 @@
-# book-store
+# :star: book-store :star:
+This is a Vue PWA app that was created to help you remember the books you've already read and keep the books you want to read sometime in the future.[Here it is!](https://book-store-two.vercel.app/)
 
-## Project setup
+## Stack
+ - Vue, Vue Router, Vuex
+ - i18n
+ - Tailwind css
+ 
+## Install
+Using yarn:
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
+yarn
 yarn serve
 ```
-
-### Compiles and minifies for production
+Or using npm
 ```
-yarn build
+npm install
+npm run serve
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
