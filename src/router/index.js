@@ -36,4 +36,14 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const isAuthentificated = false;
+
+  if (!isAuthentificated && !["/sign-up", "sign-in"].includes(to.path)) {
+    next("/sign-up");
+  } else {
+    next();
+  }
+});
+
 export default router;
