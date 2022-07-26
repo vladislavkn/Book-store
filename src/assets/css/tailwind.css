@@ -11,7 +11,11 @@
 }
 
 .Button {
-  @apply px-4 py-2 rounded font-bold;
+  @apply px-4 py-2 rounded font-bold duration-200 transition-opacity;
+}
+
+.Button:active {
+  @apply opacity-75;
 }
 
 .Button__primary {
