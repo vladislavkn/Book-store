@@ -1,12 +1,15 @@
 <template>
-  <BookForm @submit="save" :submitButtonText="$t('form.add')" />
+  <Layout>
+    <BookForm @submit="save" :submitButtonText="$t('form.add')" />
+  </Layout>
 </template>
 <script>
 import BookForm from "../components/BookForm";
+import Layout from "../components/Layout.vue";
 
 export default {
   name: "AddBook",
-  components: { BookForm },
+  components: { BookForm, Layout },
   methods: {
     save(title, description) {
       this.$store.dispatch("addBook", {

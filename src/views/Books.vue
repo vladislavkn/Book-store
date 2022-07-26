@@ -1,19 +1,22 @@
 <template>
-  <BookList
-    :books="read"
-    :buttonRoute="{ name: 'Add-book', params: { to: 'read' } }"
-    @press-book="showActionSheetForBook"
-  />
+  <Layout>
+    <BookList
+      :books="read"
+      :buttonRoute="{ name: 'Add-book', params: { to: 'read' } }"
+      @press-book="showActionSheetForBook"
+    />
+  </Layout>
 </template>
 
 <script>
 import EventBus from "../utils/EventBus.js";
 import BookList from "../components/BookList";
+import Layout from "../components/Layout.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "Books",
-  components: { BookList },
+  components: { BookList, Layout },
   computed: mapState(["read"]),
   methods: {
     showActionSheetForBook(id) {

@@ -1,17 +1,19 @@
 <template>
-  <BookForm
-    :initialTitle="book.title"
-    :initialDescription="book.description"
-    :submitButtonText="$t('form.save')"
-    @submit="save"
-  />
+  <Layout
+    ><BookForm
+      :initialTitle="book.title"
+      :initialDescription="book.description"
+      :submitButtonText="$t('form.save')"
+      @submit="save"
+  /></Layout>
 </template>
 <script>
 import BookForm from "../components/BookForm";
+import Layout from "../components/Layout.vue";
 
 export default {
   name: "AddBook",
-  components: { BookForm },
+  components: { BookForm, Layout },
   computed: {
     book() {
       const book = this.$store.getters.getBook({

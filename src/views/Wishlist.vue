@@ -1,19 +1,23 @@
 <template>
-  <BookList
-    :books="wishlist"
-    :buttonRoute="{ name: 'Add-book', params: { to: 'wishlist' } }"
-    @press-book="showActionSheetForBook"
-  />
+  <Layout>
+    <BookList
+      :books="wishlist"
+      :buttonRoute="{ name: 'Add-book', params: { to: 'wishlist' } }"
+      @press-book="showActionSheetForBook"
+    />
+  </Layout>
 </template>
 
 <script>
 import EventBus from "../utils/EventBus.js";
 import BookList from "../components/BookList";
 import { mapState } from "vuex";
+import Layout from "../components/Layout.vue";
 
 export default {
   components: {
     BookList,
+    Layout,
   },
   computed: mapState(["wishlist"]),
   methods: {
