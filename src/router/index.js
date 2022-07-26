@@ -23,6 +23,11 @@ const routes = [
     name: "Edit-book",
     component: () => import("../views/EditBook.vue"),
   },
+  {
+    path: "/sign-up",
+    name: "Sign-up",
+    component: () => import("../views/Sign-up.vue"),
+  },
 ];
 
 const router = new VueRouter({
