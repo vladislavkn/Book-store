@@ -16,6 +16,9 @@
       <span class="text-gray-600 px-2 bg-white z-10 relative">Or</span>
     </div>
     <div class="max-w-xs w-full space-y-3">
+      <router-link to="/sing-in" class="Button Button_secondary w-full">
+        Login with email & password
+      </router-link>
       <button class="Button Button_secondary w-full">
         Continue with Google
       </button>
