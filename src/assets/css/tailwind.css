@@ -5,3 +5,19 @@
 .container {
   @apply flex min-w-full min-h-full items-center justify-center p-4;
 }
+
+.InputText {
+  @apply block w-full px-4 py-2 border border-gray-600 rounded;
+}
+
+.Button {
+  @apply px-4 py-2 rounded font-bold;
+}
+
+.Button__primary {
+  @apply bg-black text-white;
+}
+
+.Button_secondary {
+  @apply bg-gray-200 text-gray-800;
+}
