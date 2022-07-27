@@ -51,10 +51,12 @@
         Login with email & password
       </router-link>
       <button class="Button Button_secondary w-full" @click="loginWithGoogle">
+        <img
+          class="h-6 w-6"
+          src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA"
+          alt="Google logo"
+        />
         Continue with Google
-      </button>
-      <button class="Button Button_secondary w-full">
-        Continue with email (passwordless)
       </button>
     </div>
   </EmptyLayout>
