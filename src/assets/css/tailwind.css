@@ -14,6 +14,10 @@
   @apply block text-center px-4 py-2 rounded font-bold duration-200 transition-opacity;
 }
 
+.Button:disabled {
+  @apply bg-gray-200 text-gray-400;
+}
+
 .Button:active {
   @apply opacity-75;
 }
