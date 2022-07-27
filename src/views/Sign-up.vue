@@ -1,91 +1,33 @@
 <template>
   <EmptyLayout class="flex-col">
-    <h1 class="text-3xl font-bold text-gray-800 max-w-xs text-center mb-2">
-      Book.Store Registration
+    <h1 class="text-3xl font-bold text-gray-800 max-w-xs text-center mb-4">
+      Create account
     </h1>
-    <form class="max-w-xs w-full mb-4 space-y-3" @submit.prevent="submit">
-      <input
-        class="InputText"
-        type="email"
-        placeholder="Email"
-        required
-        v-model="email"
-      />
-      <input
-        class="InputText"
-        type="password"
-        placeholder="Password"
-        required
-        min="8"
-        max="16"
-        v-model="password"
-      />
-      <input
-        class="InputText"
-        type="password"
-        placeholder="Repeat password"
-        required
-        min="8"
-        max="16"
-        v-model="passwordRepeat"
-      />
-      <div class="flex items-center justify-between">
-        <div class="text-sm text-red-400 mr-2">
-          {{ error }}
-        </div>
-        <button
-          class="Button Button__primary"
-          type="submit"
-          :disabled="!!error || isLoading"
-        >
-          {{ isLoading ? "Loading" : "Complete" }}
-        </button>
-      </div>
-    </form>
-    <div class="text-center mb-4 max-w-xs w-full relative">
-      <div class="Divider" />
-      <span class="text-gray-600 px-2 bg-white z-10 relative">Or</span>
-    </div>
-    <div class="max-w-xs w-full space-y-3">
-      <router-link to="/sing-in" class="Button Button_secondary w-full">
-        Login with email & password
-      </router-link>
-      <button class="Button Button_secondary w-full" @click="loginWithGoogle">
-        <img
-          class="h-6 w-6"
-          src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA"
-          alt="Google logo"
-        />
-        Continue with Google
-      </button>
-    </div>
+    <AuthForm
+      :showPasswordRepeat="true"
+      :isLoading="isLoading"
+      :error="error"
+      linkRoute="/sign-in"
+      linkText="Login instead"
+      @validationError="handleValidationError"
+      @submit="submit"
+      @loginWithGoogle="loginWithGoogle"
+    />
   </EmptyLayout>
 </template>
 
 <script>
 import EmptyLayout from "../components/EmptyLayout.vue";
+import AuthForm from "../components/AuthForm.vue";
 
 export default {
-  components: { EmptyLayout },
+  components: { EmptyLayout, AuthForm },
   data: () => ({
-    email: "",
-    password: "",
-    passwordRepeat: "",
-    error: null,
     isLoading: false,
+    error: "",
   }),
-  watch: {
-    passwordRepeat(newValue) {
-      this.error = newValue != this.password ? "Passwords don't match!" : null;
-    },
-    password(newValue) {
-      this.error =
-        newValue != this.passwordRepeat ? "Passwords don't match!" : null;
-    },
-  },
   methods: {
     submit() {
-      if (this.error) return;
       this.isLoading = true;
       this.$store
         .dispatch("registerUser", {
@@ -103,6 +45,9 @@ export default {
         .then(() => this.$router.push("/"))
         .catch((error) => (this.error = error.message))
         .finally(() => (this.isLoading = false));
+    },
+    handleValidationError(validationError) {
+      this.error = validationError;
     },
   },
 };
