@@ -50,7 +50,7 @@
       <router-link to="/sing-in" class="Button Button_secondary w-full">
         Login with email & password
       </router-link>
-      <button class="Button Button_secondary w-full">
+      <button class="Button Button_secondary w-full" @click="loginWithGoogle">
         Continue with Google
       </button>
       <button class="Button Button_secondary w-full">
@@ -82,7 +82,7 @@ export default {
     },
   },
   methods: {
-    async submit() {
+    submit() {
       if (this.error) return;
       this.isLoading = true;
       this.$store
@@ -90,6 +90,14 @@ export default {
           email: this.email,
           password: this.password,
         })
+        .then(() => this.$router.push("/"))
+        .catch((error) => (this.error = error.message))
+        .finally(() => (this.isLoading = false));
+    },
+    loginWithGoogle() {
+      this.isLoading = true;
+      this.$store
+        .dispatch("loginWithGoogle")
         .then(() => this.$router.push("/"))
         .catch((error) => (this.error = error.message))
         .finally(() => (this.isLoading = false));

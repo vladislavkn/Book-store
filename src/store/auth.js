@@ -1,4 +1,9 @@
-import { loginUser, logout, registerUser } from "../services/authApi";
+import {
+  loginUser,
+  logout,
+  registerUser,
+  loginWithGoogle,
+} from "../services/authApi";
 
 export default {
   state: () => ({
@@ -17,6 +22,11 @@ export default {
     },
     loginUser({ commit }, { email, password }) {
       return loginUser(email, password).then((user) => {
+        commit("setUser", user);
+      });
+    },
+    loginWithGoogle({ commit }) {
+      return loginWithGoogle().then((user) => {
         commit("setUser", user);
       });
     },
