@@ -69,18 +69,14 @@ export default {
   }),
   watch: {
     passwordRepeat(newValue) {
-      if (!this.showRepeatPassword) return;
-      this.$emit(
-        "validationError",
-        newValue != this.password ? "Passwords don't match!" : null
-      );
+      const errorMessage =
+        newValue != this.password ? "Passwords don't match!" : "";
+      if (this.showPasswordRepeat) this.$emit("validationError", errorMessage);
     },
     password(newValue) {
-      if (!this.showRepeatPassword) return;
-      this.$emit(
-        "validationError",
-        newValue != this.passwordRepeat ? "Passwords don't match!" : null
-      );
+      const errorMessage =
+        newValue != this.passwordRepeat ? "Passwords don't match!" : "";
+      if (this.showPasswordRepeat) this.$emit("validationError", errorMessage);
     },
   },
   props: {
@@ -119,3 +115,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.Divider {
+  @apply h-px left-0 right-0 bg-gray-300 z-0 absolute;
+  top: calc(50% - 0.5px);
+}
+</style>
