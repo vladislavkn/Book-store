@@ -2,11 +2,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import uniqid from "uniqid";
+import auth from "./auth";
+import { setAuthStateListener } from "../services/authApi";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   plugins: [createPersistedState()],
+  modules: { auth },
   state: {
     read: [],
     wishlist: [],
@@ -44,10 +47,18 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getBook: (state) => ({ collection, id }) =>
-      state[collection].find((book) => book.id === id),
+    getBook:
+      (state) =>
+      ({ collection, id }) =>
+        state[collection].find((book) => book.id === id),
     getBookIndex: (state) => (from, id) =>
       state[from].findIndex((book) => book.id === id),
     getLocale: (state) => (state.locale ? state.locale : "en"),
   },
 });
+
+setAuthStateListener((user) => {
+  store.commit("auth/setUser", user);
+});
+
+export default store;
