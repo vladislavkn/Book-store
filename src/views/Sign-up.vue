@@ -9,7 +9,7 @@
       :error="error"
       linkRoute="/sign-in"
       linkText="Login instead"
-      @validationError="handleValidationError"
+      @validationError="error = $event"
       @submit="submit"
       @loginWithGoogle="loginWithGoogle"
     />
@@ -19,43 +19,10 @@
 <script>
 import EmptyLayout from "../components/EmptyLayout.vue";
 import AuthForm from "../components/AuthForm.vue";
+import authMixin from "../../mixins/authMixin";
 
 export default {
   components: { EmptyLayout, AuthForm },
-  data: () => ({
-    isLoading: false,
-    error: "",
-  }),
-  methods: {
-    submit() {
-      this.isLoading = true;
-      this.$store
-        .dispatch("registerUser", {
-          email: this.email,
-          password: this.password,
-        })
-        .then(() => this.$router.push("/"))
-        .catch((error) => (this.error = error.message))
-        .finally(() => (this.isLoading = false));
-    },
-    loginWithGoogle() {
-      this.isLoading = true;
-      this.$store
-        .dispatch("loginWithGoogle")
-        .then(() => this.$router.push("/"))
-        .catch((error) => (this.error = error.message))
-        .finally(() => (this.isLoading = false));
-    },
-    handleValidationError(validationError) {
-      this.error = validationError;
-    },
-  },
+  mixins: [authMixin],
 };
 </script>
-
-<style>
-.Divider {
-  @apply h-px left-0 right-0 bg-gray-300 z-0 absolute;
-  top: calc(50% - 0.5px);
-}
-</style>
