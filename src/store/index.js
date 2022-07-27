@@ -58,7 +58,7 @@ const store = new Vuex.Store({
 });
 
 setAuthStateListener((user) => {
-  store.commit("auth/setUser", user);
+  store.commit("setUser", user);
 });
 
 export default store;

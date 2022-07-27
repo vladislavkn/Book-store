@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,7 +38,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthentificated = false;
+  const isAuthentificated = store.getters.isAuthentificated;
 
   if (!isAuthentificated && !["/sign-up", "sign-in"].includes(to.path)) {
     next("/sign-up");

@@ -1,7 +1,6 @@
 import { loginUser, logout, registerUser } from "../services/authApi";
 
 export default {
-  namespaced: true,
   state: () => ({
     user: null,
   }),
