@@ -1,4 +1,4 @@
-export default {
+export default (authEventType) => ({
   data: () => ({
     isLoading: false,
     error: "",
@@ -7,7 +7,7 @@ export default {
     submit() {
       this.isLoading = true;
       this.$store
-        .dispatch("loginUser", {
+        .dispatch(authEventType, {
           email: this.email,
           password: this.password,
         })
@@ -24,4 +24,4 @@ export default {
         .finally(() => (this.isLoading = false));
     },
   },
-};
+});

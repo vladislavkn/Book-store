@@ -23,6 +23,6 @@ import authMixin from "../../mixins/authMixin";
 
 export default {
   components: { EmptyLayout, AuthForm },
-  mixins: [authMixin],
+  mixins: [authMixin("registerUser")],
 };
 </script>
