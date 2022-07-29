@@ -5,8 +5,16 @@ const debounced = (fn, delay = 300) => {
     if (timeout !== null) {
       clearTimeout(timeout);
     }
-
-    timeout = setTimeout(() => fn(...args), delay);
+    return new Promise((resolve, reject) => {
+      timeout = setTimeout(() => {
+        try {
+          const result = fn(...args);
+          resolve(result);
+        } catch (e) {
+          reject(e);
+        }
+      }, delay);
+    });
   };
 };
 
