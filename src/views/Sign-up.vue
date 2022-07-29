@@ -5,7 +5,7 @@
     </h1>
     <AuthForm
       :isLoading="authMixin_isLoading"
-      :error="authMixin_error"
+      :error="error"
       @submit="authMixin_submit(email, password)"
       @loginWithGoogle="authMixin_loginWithGoogle"
     >
@@ -45,10 +45,11 @@ export default {
     email: "",
     password: "",
     passwordRepeat: "",
+    error: "",
   }),
   watch: {
     passwordRepeat() {
-      this.authMixin_error =
+      this.error =
         this.password !== this.passwordRepeat ? "Passwords do not match" : "";
     },
   },

@@ -5,13 +5,14 @@
     </h1>
     <AuthForm
       :isLoading="authMixin_isLoading"
-      :error="authMixin_error"
       @submit="authMixin_submit"
       @loginWithGoogle="authMixin_loginWithGoogle"
     >
       <template v-slot:fields>
         <AuthFormEmailField v-model="email" />
-        <AuthFormPasswordField v-model="password"
+        <AuthFormPasswordField
+          v-model="password"
+          autocomplete="current-password"
       /></template>
       <template v-slot:links>
         <router-link to="/sign-up" class="Button Button__secondary">
