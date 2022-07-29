@@ -8,7 +8,7 @@
   /></Layout>
 </template>
 <script>
-import BookForm from "../components/BookForm";
+import BookForm from "../components/AddBookForm";
 import Layout from "../components/Layout.vue";
 
 export default {

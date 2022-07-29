@@ -1,5 +1,5 @@
 <template>
-  <EmptyLayout class="flex-col">
+  <LayoutEmpty class="flex-col">
     <h1 class="text-3xl font-bold text-gray-800 max-w-xs text-center mb-4">
       Login
     </h1>
@@ -20,22 +20,22 @@
         </router-link>
       </template>
     </AuthForm>
-  </EmptyLayout>
+  </LayoutEmpty>
 </template>
 
 <script>
-import EmptyLayout from "../components/EmptyLayout.vue";
 import AuthForm from "../components/AuthForm.vue";
 import authMixin from "../../mixins/authMixin";
 import AuthFormEmailField from "../components/AuthFormEmailField.vue";
 import AuthFormPasswordField from "../components/AuthFormPasswordField.vue";
+import LayoutEmpty from "../components/LayoutEmpty.vue";
 
 export default {
   components: {
-    EmptyLayout,
     AuthForm,
     AuthFormEmailField,
     AuthFormPasswordField,
+    LayoutEmpty,
   },
   mixins: [authMixin({ authEventType: "loginUser" })],
   data: () => ({

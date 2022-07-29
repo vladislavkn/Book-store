@@ -15,8 +15,8 @@ const routes = [
     component: () => import("../views/Wishlist.vue"),
   },
   {
-    path: "/add-book/to/:to",
-    name: "Add-book",
+    path: "/add",
+    name: "Add",
     component: () => import("../views/AddBook.vue"),
   },
   {
