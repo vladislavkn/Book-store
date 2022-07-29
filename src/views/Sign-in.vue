@@ -1,25 +1,22 @@
 <template>
   <EmptyLayout class="flex-col">
     <h1 class="text-3xl font-bold text-gray-800 max-w-xs text-center mb-4">
-      Create account
+      Login
     </h1>
     <AuthForm
       :isLoading="authMixin_isLoading"
-      :error="error"
-      @submit="authMixin_submit(email, password)"
+      @submit="authMixin_submit"
       @loginWithGoogle="authMixin_loginWithGoogle"
     >
       <template v-slot:fields>
         <AuthFormEmailField v-model="email" />
-        <AuthFormPasswordField v-model="password" />
         <AuthFormPasswordField
-          placeholder="Password repeat"
-          v-model="passwordRepeat"
-        />
-      </template>
+          v-model="password"
+          autocomplete="current-password"
+      /></template>
       <template v-slot:links>
-        <router-link to="/sign-in" class="Button Button__secondary">
-          Go to login
+        <router-link to="/sign-up" class="Button Button__secondary">
+          Go to registration
         </router-link>
       </template>
     </AuthForm>
@@ -40,18 +37,10 @@ export default {
     AuthFormEmailField,
     AuthFormPasswordField,
   },
-  mixins: [authMixin({ authEventType: "registerUser" })],
+  mixins: [authMixin({ authEventType: "loginUser" })],
   data: () => ({
     email: "",
     password: "",
-    passwordRepeat: "",
-    error: "",
   }),
-  watch: {
-    passwordRepeat() {
-      this.error =
-        this.password !== this.passwordRepeat ? "Passwords do not match" : "";
-    },
-  },
 };
 </script>
