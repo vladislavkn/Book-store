@@ -42,7 +42,7 @@ export default {
     },
     error: {
       type: String,
-      required: true,
+      default: "",
     },
   },
   computed: {
