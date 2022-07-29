@@ -21,69 +21,26 @@
           Add new book to collection
         </h1>
       </nav>
-      <form @submit.prevent class="space-y-4">
-        <label class="InputText flex">
-          <input
-            class="flex-grow"
-            type="text"
-            placeholder="Book title"
-            @input="handleSearchInput"
-            list="suggestions"
-            :value="search"
-          />
-          <div class="Loader" v-if="isLoading"></div>
-        </label>
-        <datalist id="suggestions">
-          <option
-            v-for="suggestion in suggestions"
-            :key="suggestion.id"
-            :value="suggestion.title"
-          ></option>
-        </datalist>
-        <fieldset class="flex relative">
-          <div
-            class="w-1/2 absolute top-0 bottom-0 rounded duration-150 left-0 border border-teal-600 bg-teal-100"
-            :class="{ 'left-1/2': isRead }"
-          ></div>
-          <label class="px-4 py-2 text-center flex-grow relative z-10">
-            Not read yet
-            <input
-              type="radio"
-              class="hidden"
-              name="isRead"
-              :checked="!isRead"
-              @change="isRead = false"
-            />
-          </label>
-          <label class="px-4 py-2 text-center flex-grow relative z-10">
-            Already Read
-            <input
-              type="radio"
-              class="hidden"
-              name="isRead"
-              :checked="isRead"
-              @change="isRead = true"
-            />
-          </label>
-        </fieldset>
-        <div class="flex justify-between items-center">
+      <AddBookForm
+        :suggestions="suggestions"
+        :canSubmit="!!selectedBook"
+        :isLoading="isLoading"
+        :search="search"
+        @search="handleSearchInput"
+        @submit="submit"
+      >
+        <template v-slot:message>
           <div class="text-xs text-gray-600">
-            <span v-if="bookNotSelected"
-              >Select title from suggested to continue</span
-            >
-            <span class="text-red-400" v-if="booksNotFound"
+            <span v-if="isLoading">Loading...</span>
+            <span class="text-red-400" v-else-if="booksNotFound"
               >Could not find books</span
             >
+            <span v-else-if="!selectedBook"
+              >Select title from suggested to continue</span
+            >
           </div>
-          <button
-            type="submit"
-            class="Button Button__primary"
-            :disabled="bookNotSelected || booksNotFound"
-          >
-            Add
-          </button>
-        </div>
-      </form>
+        </template>
+      </AddBookForm>
     </div>
   </LayoutEmpty>
 </template>
@@ -92,66 +49,55 @@
 import LayoutEmpty from "../components/LayoutEmpty.vue";
 import { searchBookByTitle } from "../services/booksApi";
 import debounced from "../utils/debounced";
+import AddBookForm from "../components/AddBookForm.vue";
 
 export default {
   name: "AddBook",
-  components: { LayoutEmpty },
+  components: { LayoutEmpty, AddBookForm },
   data: () => ({
     search: "",
-    isRead: false,
     suggestions: [],
     isLoading: false,
   }),
   computed: {
-    bookNotSelected() {
-      if (this.suggestions.length === 0) return false;
-      const isBookSelected = ~this.suggestions.findIndex(
-        (book) => book.title === this.search
-      );
-      return !isBookSelected;
-    },
     booksNotFound() {
       return this.suggestions.length === 0 && !this.isLoading && this.search;
     },
+    selectedBook() {
+      return this.suggestions.find((book) => book.title === this.search);
+    },
   },
   methods: {
-    handleSearchInput($event) {
-      this.search = $event.target.value;
-      if (this.search && this.bookNotSelected) {
+    submit({ isReady }) {
+      this.$store.dispatch("addBookFromForm", {
+        isReady,
+        ...this.selectedBook,
+      });
+      this.$router.push("/");
+    },
+    handleSearchInput(search) {
+      this.search = search;
+      if (this.search && !this.selectedBook) {
         this.isLoading = true;
-        this.fetchSuggestions(this.search, (suggestions) => {
-          this.suggestions = suggestions;
-          this.isLoading = false;
-        });
+        this.fetchSuggestions(
+          this.search,
+          (suggestions) => {
+            this.suggestions = suggestions;
+            this.isLoading = false;
+          },
+          (error) =>
+            this.$toast.open({
+              message: error?.message ?? "Something went wrong",
+              type: error,
+            })
+        );
       }
     },
     fetchSuggestions: debounced(
-      (search, setSuggestions) =>
-        searchBookByTitle(search).then(setSuggestions),
+      (search, cb, handleError) =>
+        searchBookByTitle(search).then(cb).catch(handleError),
       500
     ),
   },
 };
 </script>
-
-<style>
-.left-1\/2 {
-  left: 50%;
-}
-.Loader {
-  @apply border-2 border-gray-400 rounded-full;
-  border-top: 2px solid #2d3748;
-  width: 1.5rem;
-  height: 1.5rem;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>
