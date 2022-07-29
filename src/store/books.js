@@ -22,4 +22,15 @@ export default {
       state.books = state.books.filter((b) => b.id !== book.id);
     },
   },
+  actions: {
+    addBookFromForm({ commit }, { title, author, isRead, id }) {
+      const book = new Book({
+        title,
+        author,
+        dateRead: isRead ? new Date() : null,
+        id,
+      });
+      commit("addBook", book);
+    },
+  },
 };
