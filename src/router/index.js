@@ -28,11 +28,17 @@ const routes = [
     path: "/sign-up",
     name: "Sign-up",
     component: () => import("../views/Sign-up.vue"),
+    meta: {
+      availableForGuest: true,
+    },
   },
   {
     path: "/sign-in",
     name: "Sign-in",
     component: () => import("../views/Sign-in.vue"),
+    meta: {
+      availableForGuest: true,
+    },
   },
 ];
 
@@ -45,8 +51,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const isAuthentificated = store.getters.isAuthentificated;
 
-  if (!isAuthentificated && !["/sign-up", "sign-in"].includes(to.path)) {
-    next("/sign-up");
+  if (!isAuthentificated && !to.meta.availableForGuest) {
+    next({ name: "Sign-up" });
   } else {
     next();
   }
