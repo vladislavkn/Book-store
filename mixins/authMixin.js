@@ -1,16 +1,19 @@
 export default ({ authEventType }) => ({
   data: () => ({
     authMixin_isLoading: false,
-    authMixin_error: "",
   }),
   methods: {
     authMixin_submit(email, password) {
-      console.log(email, password);
       this.authMixin_isLoading = true;
       this.$store
         .dispatch(authEventType, { email, password })
         .then(() => this.$router.push("/"))
-        .catch((error) => (this.authMixin_error = error.message))
+        .catch((error) => {
+          this.$toast.open({
+            message: error?.message ?? "Somethig went wrong",
+            type: "error",
+          });
+        })
         .finally(() => (this.authMixin_isLoading = false));
     },
     authMixin_loginWithGoogle() {
@@ -18,7 +21,12 @@ export default ({ authEventType }) => ({
       this.$store
         .dispatch("loginWithGoogle")
         .then(() => this.$router.push("/"))
-        .catch((error) => (this.authMixin_error = error.message))
+        .catch((error) => {
+          this.$toast.open({
+            message: error?.message ?? "Somethig went wrong",
+            type: "error",
+          });
+        })
         .finally(() => (this.authMixin_isLoading = false));
     },
   },
