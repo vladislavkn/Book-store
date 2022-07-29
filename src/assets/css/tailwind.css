@@ -7,7 +7,7 @@
 }
 
 .InputText {
-  @apply block w-full px-4 py-2 border border-gray-600 rounded;
+  @apply w-full px-4 py-2 border border-gray-600 rounded;
 }
 
 .Button {
