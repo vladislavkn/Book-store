@@ -9,7 +9,9 @@ import "vue-toast-notification/dist/theme-sugar.css";
 import "./assets/css/tailwind.css";
 
 Vue.config.productionTip = false;
-Vue.use(VueToast);
+Vue.use(VueToast, {
+  queue: true,
+});
 
 new Vue({
   router,
