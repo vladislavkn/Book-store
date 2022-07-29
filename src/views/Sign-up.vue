@@ -4,15 +4,25 @@
       Create account
     </h1>
     <AuthForm
-      :showPasswordRepeat="true"
-      :isLoading="isLoading"
-      :error="error"
-      linkRoute="/sign-in"
-      linkText="Login instead"
-      @validationError="error = $event"
-      @submit="submit"
-      @loginWithGoogle="loginWithGoogle"
-    />
+      :isLoading="authMixin_isLoading"
+      :error="authMixin_error"
+      @submit="authMixin_submit(email, password)"
+      @loginWithGoogle="authMixin_loginWithGoogle"
+    >
+      <template v-slot:fields>
+        <AuthFormEmailField v-model="email" />
+        <AuthFormPasswordField v-model="password" />
+        <AuthFormPasswordField
+          placeholder="Password repeat"
+          v-model="passwordRepeat"
+        />
+      </template>
+      <template v-slot:links>
+        <router-link to="/sign-in" class="Button Button__secondary">
+          Go to login
+        </router-link>
+      </template>
+    </AuthForm>
   </EmptyLayout>
 </template>
 
@@ -20,9 +30,27 @@
 import EmptyLayout from "../components/EmptyLayout.vue";
 import AuthForm from "../components/AuthForm.vue";
 import authMixin from "../../mixins/authMixin";
+import AuthFormEmailField from "../components/AuthFormEmailField.vue";
+import AuthFormPasswordField from "../components/AuthFormPasswordField.vue";
 
 export default {
-  components: { EmptyLayout, AuthForm },
-  mixins: [authMixin("registerUser")],
+  components: {
+    EmptyLayout,
+    AuthForm,
+    AuthFormEmailField,
+    AuthFormPasswordField,
+  },
+  mixins: [authMixin({ authEventType: "registerUser" })],
+  data: () => ({
+    email: "",
+    password: "",
+    passwordRepeat: "",
+  }),
+  watch: {
+    passwordRepeat() {
+      this.authMixin_error =
+        this.password !== this.passwordRepeat ? "Passwords do not match" : "";
+    },
+  },
 };
 </script>

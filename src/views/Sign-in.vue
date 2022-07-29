@@ -4,15 +4,21 @@
       Login
     </h1>
     <AuthForm
-      :showPasswordRepeat="false"
-      :isLoading="isLoading"
-      :error="error"
-      linkRoute="/sign-up"
-      linkText="Register instead"
-      @validationError="error = $event"
-      @submit="submit"
-      @loginWithGoogle="loginWithGoogle"
-    />
+      :isLoading="authMixin_isLoading"
+      :error="authMixin_error"
+      @submit="authMixin_submit"
+      @loginWithGoogle="authMixin_loginWithGoogle"
+    >
+      <template v-slot:fields>
+        <AuthFormEmailField v-model="email" />
+        <AuthFormPasswordField v-model="password"
+      /></template>
+      <template v-slot:links>
+        <router-link to="/sign-up" class="Button Button__secondary">
+          Go to registration
+        </router-link>
+      </template>
+    </AuthForm>
   </EmptyLayout>
 </template>
 
@@ -20,9 +26,20 @@
 import EmptyLayout from "../components/EmptyLayout.vue";
 import AuthForm from "../components/AuthForm.vue";
 import authMixin from "../../mixins/authMixin";
+import AuthFormEmailField from "../components/AuthFormEmailField.vue";
+import AuthFormPasswordField from "../components/AuthFormPasswordField.vue";
 
 export default {
-  components: { EmptyLayout, AuthForm },
-  mixins: [authMixin("loginUser")],
+  components: {
+    EmptyLayout,
+    AuthForm,
+    AuthFormEmailField,
+    AuthFormPasswordField,
+  },
+  mixins: [authMixin({ authEventType: "loginUser" })],
+  data: () => ({
+    email: "",
+    password: "",
+  }),
 };
 </script>

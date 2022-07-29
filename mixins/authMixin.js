@@ -1,24 +1,25 @@
-export default (authEventType) => ({
+export default ({ authEventType }) => ({
   data: () => ({
-    isLoading: false,
-    error: "",
+    authMixin_isLoading: false,
+    authMixin_error: "",
   }),
   methods: {
-    submit({ email, password }) {
-      this.isLoading = true;
+    authMixin_submit(email, password) {
+      console.log(email, password);
+      this.authMixin_isLoading = true;
       this.$store
         .dispatch(authEventType, { email, password })
         .then(() => this.$router.push("/"))
-        .catch((error) => (this.error = error.message))
-        .finally(() => (this.isLoading = false));
+        .catch((error) => (this.authMixin_error = error.message))
+        .finally(() => (this.authMixin_isLoading = false));
     },
-    loginWithGoogle() {
-      this.isLoading = true;
+    authMixin_loginWithGoogle() {
+      this.authMixin_isLoading = true;
       this.$store
         .dispatch("loginWithGoogle")
         .then(() => this.$router.push("/"))
-        .catch((error) => (this.error = error.message))
-        .finally(() => (this.isLoading = false));
+        .catch((error) => (this.authMixin_error = error.message))
+        .finally(() => (this.authMixin_isLoading = false));
     },
   },
 });
