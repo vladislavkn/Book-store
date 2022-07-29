@@ -5,6 +5,7 @@
     class="InputText"
     type="password"
     placeholder="Password"
+    autocomplete="new-password"
     required
     minLength="8"
     maxlength="16"

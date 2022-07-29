@@ -5,6 +5,7 @@
     class="InputText"
     type="email"
     placeholder="Email"
+    autocomplete="email"
     required
   />
 </template>
