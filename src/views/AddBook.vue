@@ -68,17 +68,17 @@
         </fieldset>
         <div class="flex justify-between items-center">
           <div class="text-xs text-gray-600">
-            <span v-if="bookNotSelected && suggestions.length"
+            <span v-if="bookNotSelected"
               >Select title from suggested to continue</span
             >
-            <span class="text-red-400" v-if="search && !suggestions.length"
+            <span class="text-red-400" v-if="booksNotFound"
               >Could not find books</span
             >
           </div>
           <button
             type="submit"
             class="Button Button__primary"
-            :disabled="bookNotSelected"
+            :disabled="bookNotSelected || booksNotFound"
           >
             Add
           </button>
@@ -104,10 +104,14 @@ export default {
   }),
   computed: {
     bookNotSelected() {
+      if (this.suggestions.length === 0) return false;
       const isBookSelected = ~this.suggestions.findIndex(
         (book) => book.title === this.search
       );
       return !isBookSelected;
+    },
+    booksNotFound() {
+      return this.suggestions.length === 0 && !this.isLoading && this.search;
     },
   },
   methods: {
