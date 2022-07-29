@@ -26,6 +26,6 @@
   @apply bg-black text-white;
 }
 
-.Button_secondary {
+.Button__secondary {
   @apply bg-gray-200 text-gray-800;
 }
