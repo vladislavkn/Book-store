@@ -79,25 +79,22 @@ export default {
       this.search = search;
       if (this.search && !this.selectedBook) {
         this.isLoading = true;
-        this.fetchSuggestions(
-          this.search,
-          (suggestions) => {
+        this.fetchSuggestions(this.search)
+          .then((suggestions) => {
             this.suggestions = suggestions;
-            this.isLoading = false;
-          },
-          (error) =>
+          })
+          .catch((error) => {
             this.$toast.open({
               message: error?.message ?? "Something went wrong",
               type: error,
-            })
-        );
+            });
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
       }
     },
-    fetchSuggestions: debounced(
-      (search, cb, handleError) =>
-        searchBookByTitle(search).then(cb).catch(handleError),
-      500
-    ),
+    fetchSuggestions: debounced(searchBookByTitle, 500),
   },
 };
 </script>
