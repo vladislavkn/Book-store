@@ -14,8 +14,3 @@ export const searchBookByTitle = (title) =>
         });
       });
     });
-
-export const searchAuthorByName = (name) =>
-  fetch(`${BASE_URL}/search/authors.json?q=${name}&limit=3`)
-    .then((res) => res.json())
-    .then((res) => res.docs.map((doc) => doc.name));
