@@ -20,7 +20,7 @@
     </datalist>
     <fieldset class="flex relative">
       <div
-        class="w-1/2 absolute top-0 bottom-0 rounded duration-150 left-0 border border-teal-600 bg-teal-100"
+        class="w-1/2 absolute top-0 bottom-0 rounded duration-150 left-0 border border-blue-600 bg-blue-100"
         :class="{ 'left-1/2': isRead }"
       ></div>
       <label class="px-4 py-2 text-center flex-grow relative z-10">

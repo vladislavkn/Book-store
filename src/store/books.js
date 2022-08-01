@@ -10,16 +10,27 @@ export class Book {
 export default {
   state: () => ({
     books: [],
+    showRead: true,
   }),
   mutations: {
     addBook(state, book) {
-      const hasBook = ~state.books.findIndex((b) => b.id === book.id);
-      if (!hasBook) {
+      const bookIndex = state.books.findIndex((b) => b.id === book.id);
+      if (!~bookIndex) {
         state.books.push(book);
+      } else {
+        state.books[bookIndex].dateRead = new Date();
       }
     },
-    removeBook(state, book) {
-      state.books = state.books.filter((b) => b.id !== book.id);
+    removeBook(state, { id }) {
+      state.books = state.books.filter((b) => b.id !== id);
+    },
+    setShowRead(state, showReadValue) {
+      state.showRead = showReadValue;
+    },
+    setBookDateRead(state, { id, dateRead }) {
+      state.books = state.books.map((b) =>
+        b.id === id ? new Book({ ...b, dateRead }) : b
+      );
     },
   },
   actions: {
@@ -32,5 +43,18 @@ export default {
       });
       commit("addBook", book);
     },
+    setBookDateRead({ commit }, { id, dateRead }) {
+      // TODO: sync with server
+      commit("setBookDateRead", { id, dateRead });
+    },
+    removeBook({ commit }, { id }) {
+      // TODO: sync with server
+      commit("removeBook", { id });
+    },
+  },
+  getters: {
+    filteredBooks: (state) =>
+      state.books.filter((b) => Boolean(b.dateRead) === state.showRead),
+    showRead: (state) => state.showRead,
   },
 };

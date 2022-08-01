@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.Container {
-  @apply flex min-w-full min-h-full items-center justify-center p-4;
-}
-
 .InputText {
   @apply w-full px-4 py-2 border border-gray-600 rounded;
 }

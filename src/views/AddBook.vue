@@ -68,9 +68,9 @@ export default {
     },
   },
   methods: {
-    submit({ isReady }) {
+    submit({ isRead }) {
       this.$store.dispatch("addBookFromForm", {
-        isReady,
+        isRead,
         ...this.selectedBook,
       });
       this.$router.push("/");
