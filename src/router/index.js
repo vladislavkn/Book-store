@@ -10,17 +10,12 @@ const routes = [
     component: () => import("../views/Books.vue"),
   },
   {
-    path: "/wishlist",
-    name: "Wishlist",
-    component: () => import("../views/Wishlist.vue"),
-  },
-  {
     path: "/add",
     name: "Add",
     component: () => import("../views/AddBook.vue"),
   },
   {
-    path: "/edit-book/:id/in/:in",
+    path: "/edit",
     name: "Edit-book",
     component: () => import("../views/EditBook.vue"),
   },
