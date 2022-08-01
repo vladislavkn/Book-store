@@ -5,7 +5,7 @@
     </h1>
     <AuthForm
       :isLoading="authMixin_isLoading"
-      @submit="authMixin_submit"
+      @submit="authMixin_submit(email, password)"
       @loginWithGoogle="authMixin_loginWithGoogle"
     >
       <template v-slot:fields>
