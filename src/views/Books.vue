@@ -118,7 +118,7 @@ table tr:nth-child(2n) {
   width: 20%;
 }
 
-.Table__showRead .Table__authorColumn {
+.Table_showRead .Table__authorColumn {
   width: 30%;
 }
 
