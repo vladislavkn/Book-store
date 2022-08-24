@@ -3,7 +3,7 @@ export default ({ authEventType }) => ({
     authMixin_isLoading: false,
   }),
   methods: {
-    authMixin_submit(email, password) {
+    authMixin_submit({ email, password }) {
       this.authMixin_isLoading = true;
       this.$store
         .dispatch(authEventType, { email, password })

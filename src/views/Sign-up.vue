@@ -1,56 +1,47 @@
 <template>
-  <LayoutEmpty class="flex-col">
-    <h1 class="text-3xl font-bold text-gray-800 max-w-xs text-center mb-4">
-      Create account
-    </h1>
-    <AuthForm
-      :isLoading="authMixin_isLoading"
-      :error="error"
-      @submit="authMixin_submit(email, password)"
-      @loginWithGoogle="authMixin_loginWithGoogle"
-    >
-      <template v-slot:fields>
-        <AuthFormEmailField v-model="email" />
-        <AuthFormPasswordField v-model="password" />
-        <AuthFormPasswordField
-          placeholder="Password repeat"
-          v-model="passwordRepeat"
-        />
-      </template>
-      <template v-slot:links>
-        <router-link to="/sign-in" class="Button Button__secondary">
-          Go to login
-        </router-link>
-      </template>
-    </AuthForm>
-  </LayoutEmpty>
+  <div class="px-2 py-4 space-y-8 mx-auto max-w-sm">
+    <Typography variant="title1" className="mb-8">Sign up</Typography>
+    <SignUpForm @submit="submit"></SignUpForm>
+    <div>
+      <Button
+        @click="authMixin_loginWithGoogle"
+        variant="secondary"
+        className="mb-2 w-full"
+      >
+        <ExternalLinkIcon></ExternalLinkIcon>Continue with Google
+      </Button>
+      <Link to="/sign-in" class="w-full"> Log in instead </Link>
+    </div>
+  </div>
 </template>
 
 <script>
-import LayoutEmpty from "../components/LayoutEmpty.vue";
-import AuthForm from "../components/AuthForm.vue";
 import authMixin from "../../mixins/authMixin";
-import AuthFormEmailField from "../components/AuthFormEmailField.vue";
-import AuthFormPasswordField from "../components/AuthFormPasswordField.vue";
+import SignUpForm from "../components/SignUpForm.vue";
+import Typography from "../ui/Typography.vue";
+import Button from "../ui/Button.vue";
+import Link from "../ui/Link.vue";
+import { ExternalLinkIcon } from "vue-feather-icons";
 
 export default {
   components: {
-    LayoutEmpty,
-    AuthForm,
-    AuthFormEmailField,
-    AuthFormPasswordField,
+    SignUpForm,
+    Typography,
+    Button,
+    Link,
+    ExternalLinkIcon,
   },
   mixins: [authMixin({ authEventType: "registerUser" })],
-  data: () => ({
-    email: "",
-    password: "",
-    passwordRepeat: "",
-    error: "",
-  }),
-  watch: {
-    passwordRepeat() {
-      this.error =
-        this.password !== this.passwordRepeat ? "Passwords do not match" : "";
+  methods: {
+    submit({ email, password, passwordRepeat }) {
+      if (password === passwordRepeat) {
+        this.authMixin_submit({ email, password });
+      } else {
+        this.$toast.open({
+          message: "Passwords do not match",
+          type: "error",
+        });
+      }
     },
   },
 };

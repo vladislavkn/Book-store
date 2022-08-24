@@ -16,8 +16,8 @@ import firebase from "./firebase";
 
 const auth = initializeAuth(firebase, {
   persistence: [
-    indexedDBLocalPersistence,
     browserLocalPersistence,
+    indexedDBLocalPersistence,
     browserSessionPersistence,
   ],
   popupRedirectResolver: browserPopupRedirectResolver,

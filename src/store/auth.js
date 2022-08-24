@@ -38,5 +38,6 @@ export default {
   },
   getters: {
     isAuthentificated: (state) => state.user !== null,
+    getUser: (state) => state.user,
   },
 };
