@@ -7,17 +7,17 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("../views/Books.vue"),
+    component: () => import("../views/Home.vue"),
   },
   {
     path: "/add",
     name: "Add",
-    component: () => import("../views/AddBook.vue"),
+    component: () => import("../views/Add.vue"),
   },
   {
-    path: "/edit",
-    name: "Edit-book",
-    component: () => import("../views/EditBook.vue"),
+    path: "/book/:id",
+    name: "Book",
+    component: () => import("../views/Book.vue"),
   },
   {
     path: "/sign-up",
@@ -35,6 +35,11 @@ const routes = [
       availableForGuest: true,
     },
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/Profile.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -45,7 +50,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthentificated = store.getters.isAuthentificated;
-
   if (!isAuthentificated && !to.meta.availableForGuest) {
     next({ name: "Sign-up" });
   } else {
