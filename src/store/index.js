@@ -1,14 +1,23 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
 import auth from "./auth";
 import books from "./books";
 import { setAuthStateListener } from "../services/authApi";
+import VuexPersistence from "vuex-persist";
+
+const vuexLocal = new VuexPersistence({
+  reducer: (state) => ({ auth: { user: state.auth.user } }),
+  storage: window.localStorage,
+});
 
 Vue.use(Vuex);
 
+setAuthStateListener((user) => {
+  store.commit("setUser", user);
+});
+
 const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [vuexLocal.plugin],
   modules: { auth, books },
   state: {
     locale: "en",
@@ -21,10 +30,6 @@ const store = new Vuex.Store({
   getters: {
     getLocale: (state) => (state.locale ? state.locale : "en"),
   },
-});
-
-setAuthStateListener((user) => {
-  store.commit("setUser", user);
 });
 
 export default store;
