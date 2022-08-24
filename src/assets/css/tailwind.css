@@ -1,27 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.InputText {
-  @apply w-full px-4 py-2 border border-gray-600 rounded;
-}
-
-.Button {
-  @apply flex items-center justify-center gap-2 text-center px-4 py-2 rounded font-bold duration-200 transition-opacity;
-}
-
-.Button:disabled {
-  @apply bg-gray-200 text-gray-400;
-}
-
-.Button:active {
-  @apply opacity-75;
-}
-
-.Button__primary {
-  @apply bg-black text-white;
-}
-
-.Button__secondary {
-  @apply bg-gray-200 text-gray-800;
-}
